@@ -135,7 +135,7 @@ def tprint(format, tid, pid, uid, pdt, pon, pgn, like):
         # l - (l)ike status
         elif f == 'l':
             s.append(str(like))
-    print(' '.join(s))
+    print(' '.join(s), flush=True)
 
 ###############################################################################
 # Test
