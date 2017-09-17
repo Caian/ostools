@@ -193,53 +193,67 @@ else:
 
     connection = oslib.OSState()
 
-#for pagenum in range(args.start, args.end + 1):
 pagenum = 1 if args.start == None else args.start
 pageend = args.end
-page = connection.GetByThread(args.thread, pagenum)
 
-if args.end == None:
-    # Keep refreshing last page in case it changes
-    # Find the last page using the PageNav
-    pageend = oslib.superfind(page, lastpgfind)
-    pageend = int(pageend) if pageend != '' else 1
-    logging.debug('Last page is %d.' % pageend)
-
-posti = 0
-postidx = 1
+postgidx = 1
 
 while True:
 
-    posti = page.find(postbstr, posti)
-    if posti < 0:
+    logging.info('Opening page %d...' % pagenum)
+
+    page = connection.GetByThread(args.thread, pagenum)
+
+    if args.end == None:
+        # Keep refreshing last page in case it changes
+        # Find the last page using the PageNav
+        pageend = oslib.superfind(page, lastpgfind)
+        pageend = int(pageend) if pageend != '' else 1
+        logging.debug('Last page is %d.' % pageend)
+
+    posti = 0
+    postidx = 1
+
+    while True:
+
+        posti = page.find(postbstr, posti)
+        if posti < 0:
+            break
+
+        postj = min(page.find(postestr), page.find(postbstr, posti+len(postbstr)))
+        if postj < 0:
+            # Should not happen
+            postj = len(page)
+
+        logging.debug('Post %d at [%d, %d].' % (postgidx, posti, postj))
+
+        post = page[posti:postj]
+        pid = int(oslib.superfind(post, postifind))
+        uid = int(oslib.superfind(post, postufind))
+        like = oslib.superfind(post, postlfind)
+        pdt1 = osdate(oslib.superfind(post, postdfind1))
+        pdt2 = osdate(oslib.superfind(post, postdfind2))
+
+        pdt = pdt1 if pdt1 != '' else pdt2
+
+        if like == '':
+            like = 'x'
+        elif like == liked:
+            like = '1'
+        elif like == notliked:
+            like = '0'
+
+        tprint(args.format, args.thread, pid, uid, pdt, postgidx, pagenum, like)
+
+        posti = postj
+        postidx += 1
+        postgidx += 1
+
+    logging.debug('Found %d posts.' % (postidx-1))
+
+    if pagenum == pageend:
         break
 
-    postj = min(page.find(postestr), page.find(postbstr, posti+len(postbstr)))
-    if postj < 0:
-        # Should not happen
-        postj = len(page)
+    pagenum += 1
 
-    logging.debug('Post %d at [%d, %d].' % (postidx, posti, postj))
-
-    post = page[posti:postj]
-    pid = int(oslib.superfind(post, postifind))
-    uid = int(oslib.superfind(post, postufind))
-    like = oslib.superfind(post, postlfind)
-    pdt1 = osdate(oslib.superfind(post, postdfind1))
-    pdt2 = osdate(oslib.superfind(post, postdfind2))
-
-    pdt = pdt1 if pdt1 != '' else pdt2
-
-    if like == '':
-        like = 'x'
-    elif like == liked:
-        like = '1'
-    elif like == notliked:
-        like = '0'
-
-    tprint(args.format, args.thread, pid, uid, pdt, postidx, pagenum, like)
-
-    posti = postj
-    postidx += 1
-
-logging.info('Found %d posts.' % (postidx-1))
+logging.info('Found %d posts.' % (postgidx-1))
