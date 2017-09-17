@@ -49,6 +49,12 @@ class OSUser:
         else:
             logging.debug("Got member id '%s'." % self.memberid)
 
+    def GetByThread(self, threadid, page=1):
+        return self.state.GetByThread(threadid, page)
+
+    def GetByPost(self, postid):
+        return self.state.GetByPost(postid)
+
     def Login(self, login, password):
         self.state.Get('index.php?login')
         res = self.state.Post('index.php?login/login', {

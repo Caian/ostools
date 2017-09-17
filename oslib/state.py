@@ -69,6 +69,12 @@ class OSState:
         self.UpdateToken(self.data)
         return self.data
 
+    def GetByThread(self, threadid, page=1):
+        return self.Get('index.php?threads/%s/page-%d' % (str(threadid), page))
+
+    def GetByPost(self, postid):
+        return self.Get('index.php?posts/%s' % str(postid))
+
     def Post(self, url, data):
         url = self.MakeUrl(url)
         logging.debug('Requesting %s.' % url)
