@@ -201,7 +201,8 @@ page = connection.GetByThread(args.thread, pagenum)
 if args.end == None:
     # Keep refreshing last page in case it changes
     # Find the last page using the PageNav
-    pageend = int(oslib.superfind(page, lastpgfind))
+    pageend = oslib.superfind(page, lastpgfind)
+    pageend = int(pageend) if pageend != '' else 1
     logging.debug('Last page is %d.' % pageend)
 
 posti = 0
