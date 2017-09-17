@@ -24,4 +24,4 @@
 
 from .state import OSState
 from .user import OSUser
-
+from .find import findff, findfr, findrf, findrr, superfind
