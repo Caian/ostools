@@ -79,7 +79,7 @@ parser.add_argument('-u', '--username', help='User name', default='')
 parser.add_argument('-p', '--password', help='Password', default='')
 parser.add_argument('-l', '--login', help='Iterative login', action='store_true', default=False)
 #parser.add_argument('-r', '--raw', help='Do not add padding to the columns', action='store_true', default=False)
-parser.add_argument('-v', '--verbose', help='Verbosity level', type=int, choices=[0, 1, 2], default=2)
+parser.add_argument('-v', '--verbose', help='Verbosity level', type=int, choices=[0, 1, 2, 3], default=1)
 
 args = parser.parse_args()
 
@@ -88,9 +88,11 @@ args = parser.parse_args()
 ###############################################################################
 
 root = logging.getLogger()
-if args.verbose == 2:
-    root.setLevel(logging.ERROR)
+if args.verbose == 0:
+    root.setLevel(100)
 elif args.verbose == 1:
+    root.setLevel(logging.ERROR)
+elif args.verbose == 2:
     root.setLevel(logging.INFO)
 else:
     root.setLevel(logging.NOTSET)
