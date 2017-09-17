@@ -25,38 +25,6 @@
 import logging, oslib, sys, getpass, argparse
 
 ###############################################################################
-# Constants
-###############################################################################
-
-postbstr = '<div class="messageInfo primaryContent">'
-postestr = '</form>'
-lastpgfind = [
-    ('+<div class="PageNav"', '>>'), 
-    ('+data-last="', '>"')
-]
-postufind = [
-    ('-<span class="authorEnd"><a href="index.php?members/', '>"'),
-    ('+.', '>/')
-]
-postdfind1 = [
-    ('-class="datePermalink"><span class="DateTime" title="', '>"')
-]
-postdfind2 = [
-    ('-class="datePermalink"><abbr', '></a>'),
-    ('+>', '><')
-]
-postifind = [
-    ('-<div class="publicControls">', '></a>'),
-    ('+data-href="index.php?posts/', '>/')
-]
-postlfind = [
-    ('-class="LikeLabel">', '></span>')
-]
-
-notliked = 'Curtir'
-liked = 'Curtir (remover)'
-
-###############################################################################
 # Command line arguments
 ###############################################################################
 
