@@ -109,7 +109,7 @@ ch.setFormatter(formatter)
 root.addHandler(ch)
 
 ###############################################################################
-# Test
+# Print a line of the table
 ###############################################################################
 def tprint(format, tid, pid, uid, pdt, pon, pgn, like):
     s = []
@@ -138,7 +138,7 @@ def tprint(format, tid, pid, uid, pdt, pon, pgn, like):
     print(' '.join(s), flush=True)
 
 ###############################################################################
-# Test
+# Convert a date to a more behaved format
 ###############################################################################
 
 def osdate(s):
@@ -159,7 +159,7 @@ def osdate(s):
     return s
 
 ###############################################################################
-# Test
+# Program body
 ###############################################################################
 
 logging.info('Hello!')
