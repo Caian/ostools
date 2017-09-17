@@ -77,7 +77,7 @@ parser.add_argument('-e', '--end', help='Ending page (included)', type=int, defa
 parser.add_argument('-f', '--format', help='Output table format', default='opu')
 parser.add_argument('-u', '--username', help='User name', default='')
 parser.add_argument('-p', '--password', help='Password', default='')
-parser.add_argument('-l', '--login', help='Iterative login', action='store_true', default=False)
+parser.add_argument('-l', '--login', help='Interactive login', action='store_true', default=False)
 #parser.add_argument('-r', '--raw', help='Do not add padding to the columns', action='store_true', default=False)
 parser.add_argument('-v', '--verbose', help='Verbosity level', type=int, choices=[0, 1, 2, 3], default=1)
 
@@ -177,11 +177,11 @@ if args.login:
 elif args.username != '' or args.password != '': 
 
     if args.username == '':
-        sys.err.write('Password option requires the Username option to be set!')
+        sys.err.write('Password option requires the Username option to be set!\n')
         exit(1)
 
     if args.password == '':
-        sys.err.write('Username option requires the Password option to be set!')
+        sys.err.write('Username option requires the Password option to be set!\n')
         exit(1)
 
     connection = oslib.OSUser()
