@@ -177,11 +177,11 @@ if args.login:
 elif args.username != '' or args.password != '': 
 
     if args.username == '':
-        sys.err.write('Password option requires the Username option to be set!\n')
+        sys.stderr.write('Password option requires the Username option to be set!\n')
         exit(1)
 
     if args.password == '':
-        sys.err.write('Username option requires the Password option to be set!\n')
+        sys.stderr.write('Username option requires the Password option to be set!\n')
         exit(1)
 
     connection = oslib.OSUser()
