@@ -125,10 +125,11 @@ if not args.stdin:
     for pid in args.posts.split(','):
         if args.rlike:
             logging.info("Unliking post '%s'..." % pid)
-            connection.Unlike(pid)
+            r = connection.Unlike(pid)
         else:
             logging.info("Liking post '%s'..." % pid)
-            connection.Like(pid)
+            r = connection.Like(pid)
+        print(pid, 1 if r else 0, flush=True)
 
 else:
 
@@ -137,8 +138,8 @@ else:
         for pid in line:
             if args.rlike:
                 logging.info("Unliking post '%s'..." % pid)
-                connection.Unlike(pid)
+                r = connection.Unlike(pid)
             else:
                 logging.info("Liking post '%s'..." % pid)
-                connection.Like(pid)
-
+                r = connection.Like(pid)
+            print(pid, 1 if r else 0, flush=True)
