@@ -58,3 +58,32 @@ def findrf(data, tokeni, tokenj, k=0):
 def findrr(data, tokeni, tokenj, k=0):
     return find(data, tokeni, tokenj, k, strrfind, strrfind)
 
+def superfind(data, format, start = 0, end = None):
+    if end == None:
+        end = len(data)
+    for a, b in format:
+        if a[0] == '+':
+            i = data.find(a[1:], start, end)
+        elif a[0] == '-':
+            i = data.rfind(a[1:], start, end)
+        else:
+            raise Exception('Invalid format: %s' % a)
+        if i < 0:
+            return ''
+        if b[0] == '+':
+            j = data.find(b[1:], start, end)
+        elif b[0] == '-':
+            j = data.rfind(b[1:], start, end)
+        elif b[0] == '>':
+            i += len(a)-1
+            j = data.find(b[1:], i, end)
+        elif b[0] == '<':
+            j = data.rfind(b[1:], start, i)
+            j = j + len(b)-1 if j >= 0 else j
+        else:
+            raise Exception('Invalid format: %s' % b)
+        if j < 0:
+            return ''
+        start, end = min(i, j), max(i, j)
+
+    return data[start:end]
